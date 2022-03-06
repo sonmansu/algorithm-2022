@@ -30,3 +30,14 @@
 *.exe
 *.out
 *.app
+
+# sumin
+smtool.h
+**/sample_data/
+**/bin/
+**/obj/
+
+.pdf
+.cbp
+.depend
+.layout
