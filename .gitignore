@@ -37,7 +37,7 @@ smtool.h
 **/bin/
 **/obj/
 
-.pdf
-.cbp
-.depend
-.layout
+*.pdf
+*.cbp
+*.depend
+*.layout
