@@ -41,3 +41,4 @@ smtool.h
 *.cbp
 *.depend
 *.layout
+*.zip

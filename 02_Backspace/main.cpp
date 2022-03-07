@@ -24,12 +24,12 @@ int main() {
     string s,t;
     list<char> lS, lT;
 
-//    cin >> N;
+    cin >> N;
     for (int i = 0; i < N; i++) {
         // get string
 //        cin >> s >> t;
-        s = "ababa";
-        t = "ba";
+        s = "backspace";
+        t = "bks";
         // string to list
         list<char> lS(s.begin(), s.end());
         list<char> lT(t.begin(), t.end());
@@ -40,6 +40,7 @@ int main() {
 
 
         while (true) {
+            contMout("s",s);
             if (lS == lT) {
                 cout<<"YES\n";
                 break;
@@ -59,21 +60,21 @@ int main() {
                 break;
             }
 
-            if (*itS++ == *itT++) { //이땐 증가시키기전 itS랑 itT를 비교해주는듯
-//                itS++;
-//                itT++;
+            if (*itS == *itT) {
                 if (itS == lS.begin()) {
-                    if (*(++itS) == *(++itT)) { //그다음 원소가 같으면 없애지 않음..
-                        varout(*itS);
-                        varout(*itT);
-                        cout("nothing to do");
-                    } else { //다를 때만 원소 한개 날려줌
+                    if ((*(++itS) == *itT)&&(*itS!=*(++itT))) {   //2번에 해당, 앞 원소 날려줌
                         itS = lS.erase(--itS);
                         itT--;
+                        continue;
+//                    if (*(++itS) == *(++itT)) { //그다음 원소가 같으면 없애지 않음..
+//                        varout(*itS);
+//                        varout(*itT);
+//                        cout("nothing to do");
+//                    }
                     }
                 }
-//                itS++;
-//                itT++;
+                itS++;
+                itT++;
             /** 첫 두 개가 다를때 **/
             } else if (itS == lS.begin()) {
                 itS = lS.erase(itS);
