@@ -36,6 +36,7 @@ smtool.h
 **/sample_data/
 **/bin/
 **/obj/
+**/others/
 
 *.pdf
 *.cbp
