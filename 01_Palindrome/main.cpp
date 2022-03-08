@@ -22,7 +22,9 @@ int checkPalin(int startIdx, int endIdx) {
                 continue;
             }
             cout << "ºÐ±â !" << endl;
+            int curWrong = wrong;
             checkPalin(startIdx+1, endIdx); //°æ¿ì 1 ·Î ÇØº½
+            wrong = curWrong; //restore
             checkPalin(startIdx, endIdx-1);   //°æ¿ì 2·Î ÇØº½
         } else if (word[startIdx+1] == word[endIdx]) { // °æ¿ì1¸¸ µÊ
             startIdx++;
