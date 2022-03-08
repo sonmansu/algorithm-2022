@@ -36,8 +36,8 @@ int checkPalin(int startIdx, int endIdx) {
     }
     if (wrong == 0) return 1;
     else if (wrong == 1) {
-        return 2;
         similar++;
+        return 2;
     }
     else return 3;
 }
