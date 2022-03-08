@@ -12,14 +12,23 @@ int main() {
     for (int i = 0; i < N; i++) {
         // get string
 //        cin >> s >> t;
-        s = "aababa";
-        t = "ababa";
+        s = "backspace";
+        t = "bks";
+
+
+        if (s.find(t)>=0) {
+            cout << "YES\n";
+            continue;
+        }
+
+
         // string to list
         deque<char> dqS(s.begin(), s.end());
         deque<char> dqT(t.begin(), t.end());
         deque<char>:: iterator it = dqS.begin();
 
         int idxS = 0, idxT = 0;
+
 
         while (true) {
             if (dqS == dqT) {
