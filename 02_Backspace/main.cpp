@@ -22,87 +22,86 @@ int main() {
 
     int N;
     string s,t;
-    list<char> lS, lT;
+    deque<char> dqS, dqT;
 
     cin >> N;
     for (int i = 0; i < N; i++) {
         // get string
-//        cin >> s >> t;
-        s = "backspace";
-        t = "bks";
+        cin >> s >> t;
+//        s = "aab";
+//        t = "ab";
         // string to list
-        list<char> lS(s.begin(), s.end());
-        list<char> lT(t.begin(), t.end());
-        // make iterator of both of them
-        list<char>::iterator itS,itT;
-        itS = lS.begin();
-        itT = lT.begin();
+        deque<char> dqS(s.begin(), s.end());
+        deque<char> dqT(t.begin(), t.end());
+        deque<char>:: iterator it = dqS.begin();
 
+        int idxS = 0, idxT = 0;
 
         while (true) {
-            contMout("s",s);
-            if (lS == lT) {
+            if (dqS == dqT) {
                 cout<<"YES\n";
                 break;
             }
-            if (itT == lT.end()) { //끝에 도달했을때
-                if (lS.size() % 2 == 0) { //짝수 개 남았을 시
+            if (idxT == dqT.size()) { //끝에 도달했을때
+                if (dqS.size() % 2 == 0) { //짝수 개 남았을 시
                     cout<<"YES\n";
                     break;
                 } else {
                     cout<<"NO\n";
                     break;
                 }
-
             }
-            if ((lS.size() < lT.size()) || (lS.size() == lT.size() && lS != lT)) {
+            if ((dqS.size() < dqT.size()) || (dqS.size() == dqT.size() && dqS != dqT)) {
                 cout<<"NO\n";
                 break;
             }
-
-            if (*itS == *itT) {
-                if (itS == lS.begin()) {
-                    if ((*(++itS) == *itT)&&(*itS!=*(++itT))) {   //2번에 해당, 앞 원소 날려줌
-                        itS = lS.erase(--itS);
-                        itT--;
+            // 비교 시작
+            if (dqS[idxS] == dqT[idxT]) {
+                if (idxS == 0) { // 첫번째 원소
+                    if ((dqS[idxS+1] == dqT[idxT]) && (dqS[idxS]!=dqT[idxT+1])) {   //2번에 해당, 앞 원소 날려줌
+    //dq 앞 날리고서 it이 begin이랑 같은지 비교하기
+//                        if (it == dqS.begin()) {
+//                            cout("yes");
+//                        } else {
+//                            cout("no");
+//                        }
+//                        dqS.pop_front();
+//
+//                        if (it == dqS.begin()) {
+//                            cout("yes");
+//                        } else {
+//                            cout("no");
+//                        }
                         continue;
-//                    if (*(++itS) == *(++itT)) { //그다음 원소가 같으면 없애지 않음..
-//                        varout(*itS);
-//                        varout(*itT);
+//                    if (*(++dqS[idxS]) == *(++dqT[idxT])) { //그다음 원소가 같으면 없애지 않음..
+//                        varout(*dqS[idxS]);
+//                        varout(*dqT[idxT]);
 //                        cout("nothing to do");
 //                    }
                     }
                 }
-                itS++;
-                itT++;
             /** 첫 두 개가 다를때 **/
-            } else if (itS == lS.begin()) {
-                itS = lS.erase(itS);
+            } else if (it == dqS.begin()) { //가르키는게 첫원소라면 한개만 지움
+                dqS.pop_front();
 
-                contout(lS);
-                varout(*itS);
+                contout(dqS);
+            } else { //두개씩 지움
+                dqS.pop_front();
+                dqS.pop_front();
 
-            } else {
-                itS = lS.erase(itS);
-                contout(lS);
-                varout(*itS);
-
-                itS = lS.erase(itS); //두번 삭제함..
-                contout(lS);
-                varout(*itS);
-
+                contout(dqS);
             }
-
-
 
 
         }
 
+        }
 
+//
+//
 
-    }
-
-
+//
+//
 
 
 
