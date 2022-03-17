@@ -7,7 +7,7 @@ vector<int> fish;
 
 int blockEven, blockOdd;
 
-operation() {
+void operation() {
     blockEven = 0;
     blockOdd = 0;
     int i, j;
@@ -36,6 +36,7 @@ int main() {
 //    vector<int> fish(k);,
     for (int i = 0; i < 5; i++) { //5번 수행
 
+        fish[0] = 0;
         for (int i = 1; i <= k; i++) { //배열 입력 받음
             cin >> fish[i];
         }
@@ -52,7 +53,8 @@ int main() {
             else if (blockOdd == 2) cout << "two\n";
             else cout << "over\n";
         } else if (blockEven == 1) {
-            cout << "two\n";
+            if (blockOdd >= 3) cout <<"over\n";
+            else cout << "two\n";
         } else { //blockEven이 2 이상임
             cout << "over\n";
         }
