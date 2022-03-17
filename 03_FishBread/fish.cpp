@@ -7,7 +7,7 @@ vector<int> fish;
 
 int blockEven, blockOdd;
 
-operation() {
+void operation() {
     blockEven = 0;
     blockOdd = 0;
     int i, j;
