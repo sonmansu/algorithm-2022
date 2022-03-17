@@ -7,7 +7,7 @@ vector<int> fish;
 
 int blockEven, blockOdd;
 
-operation() {
+void operation() {
     blockEven = 0;
     blockOdd = 0;
     int i, j;
@@ -43,7 +43,8 @@ int main() {
             else if (blockOdd == 2) cout << "two\n";
             else cout << "over\n";
         } else if (blockEven == 1) {
-            cout << "two\n";
+            if (blockOdd >= 3) cout <<"over\n";
+            else cout << "two\n";
         } else {
             cout << "over\n";
         }
