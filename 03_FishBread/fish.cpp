@@ -40,7 +40,7 @@ int main() {
 
         if (blockEven == 0) {
             if (blockOdd == 1) cout << "one\n";
-            else if (blockOdd == 2) cout << "two\n";
+            else if (blockOdd == 2 || blockOdd == 0) cout << "two\n";
             else cout << "over\n";
         } else if (blockEven == 1) {
             if (blockOdd >= 3) cout <<"over\n";
