@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../smtool.h"
+#include <vector>
 
 using namespace std;
 int k;
@@ -15,7 +15,7 @@ string operation() {
     int i, j;
     for (i = 1; i <= k; i++) {
         int fishVal = fish[i];
-        if (fishVal != i) { //구간 분할 시작
+        if (fishVal != i) {
             if (fishVal > 0) {
                 blockEven++;
                 block.push_back(2);
@@ -23,18 +23,14 @@ string operation() {
                 blockOdd++;
                 block.push_back(1);
             }
-            index.push_back(i); //시작 인덱스 저장
+            index.push_back(i);
             for (j = i+1; (fish[j] == fish[j-1]+1); j++) {
-//                cout << fish[j] << endl;
-//                cout << fish[j-1] + 1 << endl;
-            }
-            index.push_back(j-1); //끝 인덱스 저장
 
-            i = j-1; //새구간 시작 지점 설정
+            }
+            index.push_back(j-1);
+            i = j-1;
         }
     }
-    cout << "blockOdd: " << blockOdd << ", blockEven: " << blockEven << endl;
-    contMout("block vector: ", block);
     if (blockEven == 0) {
         if (blockOdd == 1) return "one\n";
         else if (blockOdd == 2 || blockOdd == 0) return  "two\n";
@@ -42,11 +38,11 @@ string operation() {
     } else if (blockEven == 1) {
         if (blockOdd >= 3) return "over\n";
         else {
-            if (block[0] == 1 && block[1] == 2 && block[2] == 1) { //만약 1 2 1 나왔는데..
-                int idx1Start = index[0]; //구간1의 시작 인덱스 저장
+            if (block[0] == 1 && block[1] == 2 && block[2] == 1) {
+                int idx1Start = index[0];
                 int idx1Val= abs(fish[idx1Start]);
 
-                int idx3End = index[5]; //구간3의 끝 인덱스 저장
+                int idx3End = index[5];
                 int idx3Val = abs(fish[idx3End]);
 
                 if (idx1Start == idx3Val && idx1Val == idx3End) return "two\n";
@@ -57,16 +53,16 @@ string operation() {
             }
 
             else if (block[0] == 1 && block[1] == 1 && block[2] == 2) {
-                int idx1Start = index[2]; //중간 구간의 시작인덱스
-                int idx2End = index[5]; //마지막 구간의 끝 인덱스
+                int idx1Start = index[2];
+                int idx2End = index[5];
 
                 if ( abs(fish[idx1Start]) == idx2End ) return "two\n";
                 else return "over\n";
             }
 
             else if (block[0] == 2 && block[1] == 1 && block[2] == 1) {
-                int idx2Start = index[0]; //첫 구간의 시작인덱스
-                int idx1End = index[3]; //중간 구간의 끝 인덱스
+                int idx2Start = index[0];
+                int idx1End = index[3];
 
                 if ( abs(fish[idx1End]) == idx2Start ) return "two\n";
                 else return "over\n";
@@ -74,7 +70,7 @@ string operation() {
             else  return  "two\n";
 
         }
-    } else { //blockEven이 2 이상임
+    } else {
         return  "over\n";
     }
 
@@ -82,25 +78,16 @@ string operation() {
 }
 
 int main() {
-//    int k; //빵틀 크기
     cin >> k;
-    fish.reserve(k+1); //k의 용량을 확보해놓음
-//    vector<int> fish(k);,
-    for (int i = 0; i < 10; i++) { //5번 수행
+    fish.reserve(k+1);
+    for (int i = 0; i < 5; i++) {
 
         fish[0] = 0;
-        for (int i = 1; i <= k; i++) { //배열 입력 받음
+        for (int i = 1; i <= k; i++) {
             cin >> fish[i];
         }
-//        fish = {0, -3, -2, 6, 1, -5, -4};
 
-        contMout("fish: ", fish);
         cout << operation();
-
-        ENDL;
-
-        LINE;
-        LINE;
 
     }
 }
