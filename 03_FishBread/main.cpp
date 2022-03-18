@@ -38,27 +38,29 @@ string operation() {
     } else if (blockEven == 1) {
         if (blockOdd >= 3) return "over\n";
         else {
-            if (block[0] == 1 && block[1] == 2 && block[2] == 1) { //만약 1 2 1 나왔는데..
-                int idx = index[0]; //구간1의 시작 인덱스 저장
-                int valIdx = abs(fish[idx]);
-                int val = abs(fish[valIdx]);
+            if (block[0] == 1 && block[1] == 2 && block[2] == 1) {
+                int idx1Start = index[0];
+                int idx1Val= abs(fish[idx1Start]);
 
-                if (idx == val) return "two\n";
+                int idx3Start = index[4];
+                int idx3Val = abs(fish[idx3Start]);
+
+                if (idx1Start == abs(fish[idx1Val]) && idx3Start == abs(fish[idx3Val])) return "two\n";
                 else return "over\n";
 
             }
 
             else if (block[0] == 1 && block[1] == 1 && block[2] == 2) {
-                int idx1Start = index[2]; //중간 구간의 시작인덱스
-                int idx2End = index[5]; //마지막 구간의 끝 인덱스
+                int idx1Start = index[2];
+                int idx2End = index[5];
 
                 if ( abs(fish[idx1Start]) == idx2End ) return "two\n";
                 else return "over\n";
             }
 
             else if (block[0] == 2 && block[1] == 1 && block[2] == 1) {
-                int idx2Start = index[0]; //첫 구간의 시작인덱스
-                int idx1End = index[3]; //중간 구간의 끝 인덱스
+                int idx2Start = index[0];
+                int idx1End = index[3];
 
                 if ( abs(fish[idx1End]) == idx2Start ) return "two\n";
                 else return "over\n";

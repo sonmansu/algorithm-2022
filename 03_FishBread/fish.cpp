@@ -39,11 +39,13 @@ string operation() {
         if (blockOdd >= 3) return "over\n";
         else {
             if (block[0] == 1 && block[1] == 2 && block[2] == 1) {
-                int idx = index[0];
-                int valIdx = abs(fish[idx]);
-                int val = abs(fish[valIdx]);
+                int idx1Start = index[0];
+                int idx1Val= abs(fish[idx1Start]);
 
-                if (idx == val) return "two\n";
+                int idx3Start = index[4];
+                int idx3Val = abs(fish[idx3Start]);
+
+                if (idx1Start == abs(fish[idx1Val]) && idx3Start == abs(fish[idx3Val])) return "two\n";
                 else return "over\n";
 
             }
