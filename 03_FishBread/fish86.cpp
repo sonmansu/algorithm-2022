@@ -25,12 +25,12 @@ string operation() {
             }
             index.push_back(i);
             for (j = i+1; (fish[j] == fish[j-1]+1); j++) {
-
             }
             index.push_back(j-1);
             i = j-1;
         }
     }
+
     if (blockEven == 0) {
         if (blockOdd == 1) return "one\n";
         else if (blockOdd == 2 || blockOdd == 0) return  "two\n";
@@ -39,19 +39,13 @@ string operation() {
         if (blockOdd >= 3) return "over\n";
         else {
             if (block[0] == 1 && block[1] == 2 && block[2] == 1) {
-                int idx1Start = index[0];
-                int idx1StartVal = abs(fish[idx1Start]);
-
-                int idx1End = index[1];
-                int idx1EndVal = abs(fish[idx1End]);
-                if (idx1Start == idx1EndVal) return "over\n";
-
                 int idx = index[0];
                 int valIdx = abs(fish[idx]);
                 int val = abs(fish[valIdx]);
-                if (idx == val) return "two\n";
 
-                return "over\n";
+                if (idx == val) return "two\n";
+                else return "over\n";
+
             }
 
             else if (block[0] == 1 && block[1] == 1 && block[2] == 2) {
@@ -68,9 +62,7 @@ string operation() {
 
                 if ( abs(fish[idx1End]) == idx2Start ) return "two\n";
                 else return "over\n";
-            }
-            else  return  "two\n";
-
+            } else  return  "two\n";
         }
     } else {
         return  "over\n";
@@ -90,6 +82,7 @@ int main() {
         }
 
         cout << operation();
+
 
     }
 }

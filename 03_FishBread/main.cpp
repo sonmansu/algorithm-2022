@@ -43,14 +43,32 @@ string operation() {
         if (blockOdd >= 3) return "over\n";
         else {
             if (block[0] == 1 && block[1] == 2 && block[2] == 1) { //만약 1 2 1 나왔는데..
-                int idx1Start = index[0]; //구간1의 시작 인덱스 저장
-                int idx1Val= abs(fish[idx1Start]);
+//                int idx1Start = index[0]; //구간1의 시작 인덱스 저장
+//                int idx1Val= abs(fish[idx1Start]);
+//
+//                int idx3End = index[5]; //구간3의 끝 인덱스 저장
+//                int idx3Val = abs(fish[idx3End]);
+//
+//                if (idx1Start == idx3Val && idx1Val == idx3End) return "two\n";
 
-                int idx3End = index[5]; //구간3의 끝 인덱스 저장
-                int idx3Val = abs(fish[idx3End]);
+                // 새로 추가
+                int idx1Start = index[0];
+                int idx1StartVal = abs(fish[idx1Start]);
 
-                if (idx1Start == idx3Val && idx1Val == idx3End) return "two\n";
-                else return "over\n";
+                int idx1End = index[1];
+                int idx1EndVal = abs(fish[idx1End]);
+                if (idx1Start == idx1EndVal) return "over\n";
+
+                // fish 86
+                int idx = index[0];
+                int valIdx = abs(fish[idx]);
+                int val = abs(fish[valIdx]);
+                if (idx == val) return "two\n";
+                // fish 86
+
+
+
+                return "over\n";
 
 
 
