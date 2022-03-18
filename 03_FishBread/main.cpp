@@ -83,7 +83,15 @@ string operation() {
             }
 
             else if (block[0] == 1 && block[1] == 1 && block[2] == 2) {
-                int idx1Start = index[2]; //중간 구간의 시작인덱스
+                //새로 추가 4
+                int idx1Start = index[0];
+                int idx1StartVal = abs(fish[idx1Start]);
+                int  idx1End = index[1];
+                int  idx1EndVal = abs(fish[idx1End]);
+                if (idx1Start == idx1EndVal) return "over\n";
+
+
+                idx1Start = index[2]; //중간 구간의 시작인덱스
                 int idx2End = index[5]; //마지막 구간의 끝 인덱스
 
                 if ( abs(fish[idx1Start]) == idx2End ) return "two\n";
@@ -91,8 +99,15 @@ string operation() {
             }
 
             else if (block[0] == 2 && block[1] == 1 && block[2] == 1) {
+                //새로 추가 3
+                int idx1Start = index[4];
+                int idx1StartVal = abs(fish[idx1Start]);
+                int  idx1End = index[5];
+                int  idx1EndVal = abs(fish[idx1End]);
+                if (idx1Start == idx1EndVal) return "over\n";
+
                 int idx2Start = index[0]; //첫 구간의 시작인덱스
-                int idx1End = index[3]; //중간 구간의 끝 인덱스
+                 idx1End = index[3]; //중간 구간의 끝 인덱스
 
                 if ( abs(fish[idx1End]) == idx2Start ) return "two\n";
                 else return "over\n";

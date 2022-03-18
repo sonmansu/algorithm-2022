@@ -32,60 +32,56 @@ string operation() {
         }
     }
     if (blockEven == 0) {
-        if (blockOdd == 1) return "one\n";
-        else if (blockOdd == 2 || blockOdd == 0) return  "two\n";
-        else return  "over\n";
+        if (blockOdd == 1) return "one";
+        else if (blockOdd == 2 || blockOdd == 0) return  "two";
+        else return  "over";
     } else if (blockEven == 1) {
-        if (blockOdd >= 3) return "over\n";
+        if (blockOdd >= 3) return "over";
         else {
             if (block[0] == 1 && block[1] == 2 && block[2] == 1) {
                 int idx1Start = index[0];
                 int idx1StartVal = abs(fish[idx1Start]);
 
                 int idx1End = index[1];
-                int idx1EndVal = abs(fish[idx1End]);
-                if (idx1Start == idx1EndVal) return "over\n";
+                if (idx1Start == abs(fish[idx1End])) return "over";
 
-                //
                idx1Start = index[4];
                  idx1StartVal = abs(fish[idx1Start]);
-
                  idx1End = index[5];
-                 idx1EndVal = abs(fish[idx1End]);
-                if (idx1Start == idx1EndVal) return "over\n";
-
-
+                if (idx1Start == abs(fish[idx1End])) return "over";
                 int idx = index[0];
                 int valIdx = abs(fish[idx]);
-                int val = abs(fish[valIdx]);
-                if (idx == val) return "two\n";
+                if (idx == abs(fish[valIdx])) return "two";
 
-                return "over\n";
+                return "over";
             }
 
             else if (block[0] == 1 && block[1] == 1 && block[2] == 2) {
-                int idx1Start = index[2];
+                int idx1Start = index[0];
+                int idx1StartVal = abs(fish[idx1Start]);
+                int  idx1End = index[1];
+                if (idx1Start == abs(fish[idx1End])) return "over";
+                idx1Start = index[2];
                 int idx2End = index[5];
-
-                if ( abs(fish[idx1Start]) == idx2End ) return "two\n";
-                else return "over\n";
+                if ( abs(fish[idx1Start]) == idx2End ) return "two";
+                else return "over";
             }
-
             else if (block[0] == 2 && block[1] == 1 && block[2] == 1) {
+                int idx1Start = index[4];
+                int idx1StartVal = abs(fish[idx1Start]);
+                int  idx1End = index[5];
+                if (idx1Start == abs(fish[idx1End])) return "over";
                 int idx2Start = index[0];
-                int idx1End = index[3];
+                 idx1End = index[3];
 
-                if ( abs(fish[idx1End]) == idx2Start ) return "two\n";
-                else return "over\n";
+                if ( abs(fish[idx1End]) == idx2Start ) return "two";
+                else return "over";
             }
-            else  return  "two\n";
-
+            else  return  "two";
         }
     } else {
-        return  "over\n";
+        return  "over";
     }
-
-
 }
 
 int main() {
@@ -97,8 +93,7 @@ int main() {
         for (int i = 1; i <= k; i++) {
             cin >> fish[i];
         }
-
-        cout << operation();
+        cout << operation() << '\n';
 
     }
 }
