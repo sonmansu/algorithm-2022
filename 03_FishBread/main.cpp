@@ -7,7 +7,9 @@ vector<int> fish;
 
 int blockEven, blockOdd;
 
-void operation() {
+string operation() {
+    vector<int> block, index;
+
     blockEven = 0;
     blockOdd = 0;
     int i, j;
@@ -16,9 +18,12 @@ void operation() {
         if (fishVal != i) { //구간 분할 시작
             if (fishVal > 0) {
                 blockEven++;
+                block.push_back(2);
             } else {
                 blockOdd++;
+                block.push_back(1);
             }
+            index.push_back(i);
             for (j = i+1; (fish[j] == fish[j-1]+1); j++) {
 //                cout << fish[j] << endl;
 //                cout << fish[j-1] + 1 << endl;
@@ -27,6 +32,30 @@ void operation() {
             i = j-1; //새구간 시작 지점 설정
         }
     }
+    cout << "blockOdd: " << blockOdd << ", blockEven: " << blockEven << endl;
+
+    if (blockEven == 0) {
+        if (blockOdd == 1) return "one\n";
+        else if (blockOdd == 2 || blockOdd == 0) return  "two\n";
+        else return  "over\n";
+    } else if (blockEven == 1) {
+        if (blockOdd >= 3) return "over\n";
+        else {
+            if (block[0] == 1 && block[1] == 2 && block[2] == 1) { //만약 1 2 1 나왔는데..
+                int idx = index[0]; //구간1의 인덱스 저장
+                int valIdx = abs(fish[idx]);
+                int val = abs(fish[valIdx]);
+
+                if (idx == val) return "two\n";
+                else return "over\n";
+
+            } else  return  "two\n";
+        }
+    } else { //blockEven이 2 이상임
+        return  "over\n";
+    }
+
+
 }
 
 int main() {
@@ -43,26 +72,10 @@ int main() {
 //        fish = {0, -3, -2, 6, 1, -5, -4};
 
         contMout("fish: ", fish);
+        cout << operation();
 
-        operation();
-        cout << "blockOdd: " << blockOdd << ", blockEven: " << blockEven << endl;
         ENDL;
 
-        if (blockEven == 0) {
-            if (blockOdd == 1) cout << "one\n";
-            else if (blockOdd == 2 || blockOdd == 0) cout << "two\n";
-            else cout << "over\n";
-        } else if (blockEven == 1) {
-            if (blockOdd >= 3) cout <<"over\n";
-            else cout << "two\n";
-        } else { //blockEven이 2 이상임
-            cout << "over\n";
-        }
-
-//        if (blockEven >= 2) cout << "over\n";
-//        else if (blockEven ==1) cout << "two\n";
-//        else if (blockEven ==0 && blockOdd ==2) cout << "two\n";
-//        else cout << "one\n";
         LINE;
         LINE;
 
