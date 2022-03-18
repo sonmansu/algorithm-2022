@@ -26,7 +26,7 @@ string operation() {
             index.push_back(i);
             for (j = i+1; (fish[j] == fish[j-1]+1); j++) {
             }
-
+            index.push_back(j-1);
             i = j-1;
         }
     }
@@ -46,6 +46,22 @@ string operation() {
                 if (idx == val) return "two\n";
                 else return "over\n";
 
+            }
+
+            else if (block[0] == 1 && block[1] == 1 && block[2] == 2) {
+                int idx1Start = index[2];
+                int idx2End = index[5];
+
+                if ( abs(fish[idx1Start]) == idx2End ) return "two\n";
+                else return "over\n";
+            }
+
+            else if (block[0] == 2 && block[1] == 1 && block[2] == 1) {
+                int idx2Start = index[0];
+                int idx1End = index[3];
+
+                if ( abs(fish[idx1End]) == idx2Start ) return "two\n";
+                else return "over\n";
             } else  return  "two\n";
         }
     } else {
