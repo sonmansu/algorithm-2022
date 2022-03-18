@@ -23,17 +23,18 @@ string operation() {
                 blockOdd++;
                 block.push_back(1);
             }
-            index.push_back(i);
+            index.push_back(i); //시작 인덱스 저장
             for (j = i+1; (fish[j] == fish[j-1]+1); j++) {
 //                cout << fish[j] << endl;
 //                cout << fish[j-1] + 1 << endl;
             }
+            index.push_back(j-1); //끝 인덱스 저장
 
             i = j-1; //새구간 시작 지점 설정
         }
     }
     cout << "blockOdd: " << blockOdd << ", blockEven: " << blockEven << endl;
-
+    contMout("block vector: ", block);
     if (blockEven == 0) {
         if (blockOdd == 1) return "one\n";
         else if (blockOdd == 2 || blockOdd == 0) return  "two\n";
@@ -42,14 +43,32 @@ string operation() {
         if (blockOdd >= 3) return "over\n";
         else {
             if (block[0] == 1 && block[1] == 2 && block[2] == 1) { //만약 1 2 1 나왔는데..
-                int idx = index[0]; //구간1의 인덱스 저장
+                int idx = index[0]; //구간1의 시작 인덱스 저장
                 int valIdx = abs(fish[idx]);
                 int val = abs(fish[valIdx]);
 
                 if (idx == val) return "two\n";
                 else return "over\n";
 
-            } else  return  "two\n";
+            }
+
+            else if (block[0] == 1 && block[1] == 1 && block[2] == 2) {
+                int idx1Start = index[2]; //중간 구간의 시작인덱스
+                int idx2End = index[5]; //마지막 구간의 끝 인덱스
+
+                if ( abs(fish[idx1Start]) == idx2End ) return "two\n";
+                else return "over\n";
+            }
+
+            else if (block[0] == 2 && block[1] == 1 && block[2] == 1) {
+                int idx2Start = index[0]; //첫 구간의 시작인덱스
+                int idx1End = index[3]; //중간 구간의 끝 인덱스
+
+                if ( abs(fish[idx1End]) == idx2Start ) return "two\n";
+                else return "over\n";
+            }
+            else  return  "two\n";
+
         }
     } else { //blockEven이 2 이상임
         return  "over\n";
