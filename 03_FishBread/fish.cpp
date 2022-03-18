@@ -46,6 +46,15 @@ string operation() {
                 int idx1EndVal = abs(fish[idx1End]);
                 if (idx1Start == idx1EndVal) return "over\n";
 
+                //
+               idx1Start = index[4];
+                 idx1StartVal = abs(fish[idx1Start]);
+
+                 idx1End = index[5];
+                 idx1EndVal = abs(fish[idx1End]);
+                if (idx1Start == idx1EndVal) return "over\n";
+
+
                 int idx = index[0];
                 int valIdx = abs(fish[idx]);
                 int val = abs(fish[valIdx]);

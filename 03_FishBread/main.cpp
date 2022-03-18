@@ -51,12 +51,20 @@ string operation() {
 //
 //                if (idx1Start == idx3Val && idx1Val == idx3End) return "two\n";
 
-                // 새로 추가
+                // 새로 추가 1
                 int idx1Start = index[0];
                 int idx1StartVal = abs(fish[idx1Start]);
 
                 int idx1End = index[1];
                 int idx1EndVal = abs(fish[idx1End]);
+                if (idx1Start == idx1EndVal) return "over\n";
+
+                // 새로 추가 2
+                 idx1Start = index[4];
+                 idx1StartVal = abs(fish[idx1Start]);
+
+                 idx1End = index[5];
+                 idx1EndVal = abs(fish[idx1End]);
                 if (idx1Start == idx1EndVal) return "over\n";
 
                 // fish 86
