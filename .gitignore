@@ -43,3 +43,4 @@ smtool.h
 *.depend
 *.layout
 *.zip
+*.inp
