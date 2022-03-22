@@ -1,5 +1,5 @@
 #include <iostream>
-#include "../smtool.h"
+#include <vector>
 #include "timebomb.h"
 
 using namespace std;
@@ -11,21 +11,15 @@ int main() {
 
     box_ready();
     N = box_size();
-    varout(N);
 
-//    index.reserve(N+1);
     for (int i = 0; i < N; i++) {
         index.push_back(i+1);
-//        index[i] = i+1; //idx 집어넣음
     }
-    ENDL;
 
     tournament.push_back(index);
 
-    // making tournament vector
     int i = 0;
     while(true) {
-        contMout("tournament[i]:", tournament[i]);
         int length = tournament[i].size(); // 10
         vector<int> temp;
 
@@ -46,22 +40,11 @@ int main() {
         i++;
 
     }
-    // print
-    LINE;
-    for (auto w: tournament) {
-        for (auto ww: w) {
-            cout << ww << " ";
-        }
-        cout << endl;
-    }
-    LINE;
     // making second vector
     vector<int> second;
     int maxIdxVal = tournament[tournament.size()-1][0];
     int maxIdx = 0;
     for (int j = tournament.size()-2; j >= 0; j--) {
-        contMout("second vec: ", second);
-        int left = tournament[j][maxIdx*2]; // temporary
 
         if (tournament[j][maxIdx*2] == maxIdxVal) {
             if ( (maxIdx*2+1) <= tournament[j].size()-1 )
@@ -72,9 +55,7 @@ int main() {
             maxIdx = maxIdx*2+1;
         }
     }
-    contMout("second", second);
 
-    //second중에서 최댓값 찾음..
     if (second.size() == 1) box_report(second[0]);
 
     result = box_comp(second[0], second[1]);
