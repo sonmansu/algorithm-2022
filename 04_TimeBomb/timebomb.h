@@ -8,7 +8,7 @@ FILE* in;
 FILE* out;
 
 void box_ready(){
-    in = fopen("02.inp", "r");
+    in = fopen("04.inp", "r");
     fscanf(in, "%d", &N);
     Limit = N + (int)ceil(log(N) / log(2)) + 3;
     Box = (int*)malloc(sizeof(int) * (N + 1));
