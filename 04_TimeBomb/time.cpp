@@ -26,6 +26,10 @@ int main() {
         if (length == 1) break;
 
         for (int j = 0; j < length; j=j+2) {
+            if ( length-1 < j+1) {
+                temp.push_back(tournament[i][j]);
+                continue;
+            }
             result = box_comp(tournament[i][j], tournament[i][j+1]);
 
             if (result == 1) {

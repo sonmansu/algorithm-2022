@@ -8,7 +8,7 @@ FILE* in;
 FILE* out;
 
 void box_ready(){
-    in = fopen("04.inp", "r");
+    in = fopen("test.inp", "r");
     fscanf(in, "%d", &N);
     Limit = N + (int)ceil(log(N) / log(2)) + 3;
     Box = (int*)malloc(sizeof(int) * (N + 1));
@@ -26,6 +26,7 @@ int box_comp(int i , int  j){
     if (called > Limit){
         out = fopen("test.out", "w");
         fprintf(out, "Function call limit over");
+        printf("Function call limit over");
         free(Box);
         exit(-1);
     }
@@ -45,6 +46,7 @@ int box_comp(int i , int  j){
 void box_report(int w){
     out = fopen("test.out", "w");
     fprintf(out, "%d", w);
+    printf("´ä: %d", w);
     free(Box);
     exit(0);
 }
