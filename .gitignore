@@ -44,3 +44,5 @@ smtool.h
 *.layout
 *.zip
 *.inp
+
+**/.vscode/
