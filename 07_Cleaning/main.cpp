@@ -22,7 +22,7 @@ bool cmp(const vector<int> &w1, const vector<int> &w2) {
     else false;
 }
 bool binaryCmp(const vector<int> &vec, int value) {
-    return vec[1] < value; // compare with end day 
+    return vec[1] < value; // compare with end day
 }
 int main() {
     int N;
@@ -48,17 +48,22 @@ int main() {
         // // find the day which finishs earlier than the startDay
         // int idx = i - 1;
         // while (idx > -1) {
-        //     if (requests[idx][1] < startDay) { 
+        //     if (requests[idx][1] < startDay) {
         //         break;
         //     }
         //     idx--;
         // }
-        int idx = i - 2;
-        auto it = lower_bound(requests.begin(), requests.begin() + idx, startDay, binaryCmp);
-        cout << it - requests.begin() << endl;
+//        cout << *(requests.begin() + idx) << endl;
+//        cout << *(requests.begin())[0] << endl;
+//        cout << requests[0][0];
+//        auto it2 = requests.begin() + idx;
+
+        auto it = lower_bound(requests.begin(), requests.begin() + i, startDay, binaryCmp);
+        cout << it - requests.begin() -1 << endl;
+        int idx = it - requests.begin() -1;
 
         int money1 = requests[i][2];
-        int day1 = requests[i][1]- requests[i][0] + 1; 
+        int day1 = requests[i][1]- requests[i][0] + 1;
         if (idx != -1) {
             money1 += clean[idx][0] - 10;
             day1 += clean[idx][1];
@@ -87,5 +92,5 @@ int main() {
     printClean();
     cout << clean[N-1][0] << ' ' << clean[N-1][1];
 
-    
+
 }

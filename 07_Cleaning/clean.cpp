@@ -1,4 +1,6 @@
-#include <bits/stdc++.h>
+#include <vector>
+#include <iostream>
+#include <algorithm>
 using namespace std;
 
 vector<vector<int>> requests;
@@ -7,6 +9,9 @@ vector<vector<int>> clean;
 bool cmp(const vector<int> &w1, const vector<int> &w2) {
     if (w1[1] < w2[1]) return true;
     else false;
+}
+bool binaryCmp(const vector<int> &vec, int value) {
+    return vec[1] < value; // compare with end day
 }
 int main() {
     int N;
@@ -28,14 +33,11 @@ int main() {
     for (int i = 1; i < N; i++) {
         // case 1. include ith work
         int startDay = requests[i][0];
-        int idx = i - 1;
+        
         // find the day which finishs earlier than the startDay
-        while (idx > -1) {
-            if (requests[idx][1] < startDay) { 
-                break;
-            }
-            idx--;
-        }
+        auto it = lower_bound(requests.begin(), requests.begin() + i, startDay, binaryCmp);
+        int idx = it - requests.begin() -1;
+
         int money1 = requests[i][2];
         int day1 = requests[i][1]- requests[i][0] + 1; 
         if (idx != -1) {
@@ -65,5 +67,5 @@ int main() {
     }
     cout << clean[N-1][0] << ' ' << clean[N-1][1];
 
-    
+    return 0;
 }
