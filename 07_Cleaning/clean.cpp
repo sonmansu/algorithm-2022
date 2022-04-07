@@ -14,6 +14,10 @@ bool binaryCmp(const vector<int> &vec, int value) {
     return vec[1] < value; // compare with end day
 }
 int main() {
+    ios_base :: sync_with_stdio(false);
+    cin.tie(NULL);
+    cout.tie(NULL);
+
     int N;
     cin >> N;
     requests.resize(N, vector<int>(3));
@@ -40,7 +44,7 @@ int main() {
 
         int money1 = requests[i][2];
         int day1 = requests[i][1]- requests[i][0] + 1; 
-        if (idx != -1) {
+        if (idx != -1 && clean[idx][0] > 10) {
             money1 += clean[idx][0] - 10;
             day1 += clean[idx][1];
         }
