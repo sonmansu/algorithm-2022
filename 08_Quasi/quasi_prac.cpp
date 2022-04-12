@@ -16,7 +16,7 @@ struct Compare {
 		else
 			return a.size() > b.size();
 	}
-};
+} cmp;
 set<string, Compare> mySet;
 
 void printTable() {
@@ -47,6 +47,21 @@ void printTable() {
     }
     cout << "==============================\n";
 }
+void printStringTable() {
+    int len = stringTable.size();
+
+
+    for (int i = 0; i < len; i++) {
+        if (i < 10)
+            cout << '0';
+        cout << i << " | ";
+        for (int j = 0; j < stringTable[0].size(); j++) {
+            printf("(%d)'%s'/", j, stringTable[i][j].c_str());
+        }
+        cout << endl;
+    }
+    cout << "==============================\n";
+}
 void printM() {
     for (auto it = m.begin(); it != m.end(); ++it) {
         printf("'%c' : ", (*it).first );
@@ -68,10 +83,16 @@ void printLocationM() {
     cout << endl;
 }
 int main() {
-    // string s1 = "goodbanana_box";  // size: n
-    // string s2 = "cob_aonwanxabin"; // size: m
-    string s1, s2;
-    cin >> s1 >> s2;
+    string s1 = "goodbanana_box";  // size: n
+    string s2 = "cob_aonwanxabin"; // size: m
+    // string s1 = "new_computers_internet_system";
+    // string s2 = "wucommputer_interanets_sytm";
+    // string s1 = "abcdefghijk";
+    // string s2 = "kjihgfedcba";
+    // string s1 = "t_systm";
+    // string s2 = "ts_sytm";
+    // string s1, s2;
+    // cin >> s1 >> s2;
     int s1Size = s1.size();
     int s2Size = s2.size();
 
@@ -117,6 +138,10 @@ int main() {
         }
     }
     printLocationM();
+    if (locationM.size() == 0) {
+        cout << (*m.begin()).first;
+        return 0;
+    }
     // step 3. connect locationMap
     vector<string> substringVec;
     for (auto it = locationM.begin(); it != locationM.end(); it++) {
@@ -130,13 +155,22 @@ int main() {
             pii tempKey = valueVec[j]; // (1,3)
             string tempStr = string(stringTable[key.first][key.second]) + s1[tempKey.first] ;
             varMout("tempStr: ", tempStr);
+            if (tempStr == "wcomputer_internet_syt")
+                varout("stop!");
             if (locationM.find(tempKey) != locationM.end()) { // find tempKey
+                string currStr = stringTable[tempKey.first][tempKey.second];
+                if (currStr != "") { // if it's not empty
+                    tempStr = min(currStr, tempStr, cmp);
+                    varMout("HAHA!",tempStr);
+                }
                 stringTable[tempKey.first][tempKey.second] = tempStr;
             } else {
                 mySet.insert(tempStr);
             }
         }
+        
     }
+    printStringTable();
     contMout("mySet: ", mySet);
     cout << *mySet.begin();
 
