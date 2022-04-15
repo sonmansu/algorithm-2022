@@ -12,24 +12,18 @@ int operation(pii p1, pii p2, char op) {
     int big, small, small1, small2, small3;
     switch (op) {
     case '+':
-    // 1 big + big / 2. small + small
-         big = p1.first + p2.first;
-         small = p1.second + p2.second;
         minmaxVec.push_back(p1.first + p2.first);
         minmaxVec.push_back(p1.second + p2.second);
+        minmaxVec.push_back(p1.first + p2.second);
+        minmaxVec.push_back(p1.second + p2.first);
         break;
     case '-':
-    //1. big - small / 2. small - big
-         big = p1.first - p2.second;
-         small = p1.second - p2.first;
+        minmaxVec.push_back(p1.first - p2.first);
+        minmaxVec.push_back(p1.second - p2.second);
         minmaxVec.push_back(p1.first - p2.second);
         minmaxVec.push_back(p1.second - p2.first);
         break;
     case '*':
-         big = p1.first * p2.first;
-         small1 = p1.second * p2.second;
-         small2 = p1.first * p2.second;
-         small3 = p1.second * p2.first;
         minmaxVec.push_back(p1.first * p2.first);
         minmaxVec.push_back(p1.second * p2.second);
         minmaxVec.push_back(p1.first * p2.second);
