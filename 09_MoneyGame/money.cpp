@@ -1,15 +1,15 @@
 #include <bits/stdc++.h>
 using namespace std;
-typedef pair<int, int> pii;
+typedef pair<long long, long long> pii;
 
 vector<char> op(30); // operator's max : 29
-vector<int> num(31); // max int count: 30
+vector<long long> num(31); // max long long count: 30
 vector<vector<pii>> table;
 
-vector<int> minmaxVec;
-int operation(pii p1, pii p2, char op) {
-    int res;
-    int big, small, small1, small2, small3;
+vector<long long> minmaxVec;
+long long operation(pii p1, pii p2, char op) {
+    long long res;
+    long long big, small, small1, small2, small3;
     switch (op) {
     case '+':
         minmaxVec.push_back(p1.first + p2.first);
@@ -32,8 +32,8 @@ int operation(pii p1, pii p2, char op) {
     }
     return res;
 }
-int operation(int x, int y, char op) {
-    int res;
+long long operation(long long x, long long y, char op) {
+    long long res;
     switch (op) {
     case '+':
     // 1 big + big / 2. small + small
