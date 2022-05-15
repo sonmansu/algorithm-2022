@@ -19,6 +19,7 @@ public:
     }
 };
 vector<vector<Edge>> graph(26);
+vector<vector<Edge>> graphBfs(26);
 
 void printG() {
     LINE;
@@ -40,12 +41,39 @@ bool cmp(const Edge &edge1, const Edge &edge2) {
     }
 }
 int dist = 0;
+int maxDist = 0;
 int finish = 0;
 int restore = 0;
 int turn = 1;
 deque<char> dq;
 vector<string> result;
 vector<int> dists;
+
+queue <int> que;
+
+void bfs(int index) {
+	cout << (char)(index + 'A');
+	visited[index] = true;
+	que.push(index);
+	int nowNum;
+	while(!que.empty()){
+		nowNum = que.front();
+		que.pop();
+
+		for (int i = 0; i < graph[nowNum].size(); i++) {
+			if (visited[graph[nowNum][i].dest] == false) {
+                dist += graph[index][i].weight;
+                cout << "dist updated: " << dist << endl;
+				cout << (char)(graph[nowNum][i].dest + 'A');
+				visited[graph[nowNum][i].dest] = true;
+				que.push(graph[nowNum][i].dest);
+			}
+		}
+	}
+
+	return;
+}
+
 void dfs(int index) {
 //    cout << (char) (index + 'a') << ' ';
     visited[index] = true;
@@ -55,7 +83,8 @@ void dfs(int index) {
 //        if (finish) return;
         printf("(%c - %c, %d)\n", (char) (index + 'a'), (char) graph[index][i].dest + 'a', graph[index][i].weight);
         if (graph[index][i].dest == 0) {
-            dists.push_back(dist + graph[index][i].weight);
+            dist = dist + graph[index][i].weight;
+            if (dist > maxDist) maxDist = dist;
 
             string outputString(dq.begin(), dq.end());
             cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n";
@@ -65,6 +94,9 @@ void dfs(int index) {
         if (visited[graph[index][i].dest] == false) {
             dist += graph[index][i].weight;
             cout << "dist updated: " << dist << endl;
+
+            vector<vector<Edge>> graphBfs(26);
+
             dfs(graph[index][i].dest);
         }
         if (restore == 1) {
@@ -101,32 +133,33 @@ int main() {
             sort(graph[i].begin(), graph[i].end(), cmp);
         }
     }
+    graphBfs = graph;
 
     printG();
 
-    dfs(0);
+    // dfs(0);
 
-    LINE;
-    for (auto w: result) {
-        cout << w << endl;
-    }
-    LINE;
+    // LINE;
+    // for (auto w: result) {
+    //     cout << w << endl;
+    // }
+    // LINE;
 
-    sort(dists.begin(), dists.end(), greater<>());
-    cout << dists[0] << endl;
-    int maxLeng = 0;
-    string resultString;
-    for (auto w: result) {
-        if (w.length() > maxLeng) {
-            maxLeng = w.length();
-            resultString = w;
-        } else if (w.length() == maxLeng) {
-            resultString = w < resultString? w : resultString;
-        }
-    }
-    for (auto w: resultString) {
-        cout << w << ' ';
-    }
+    // sort(dists.begin(), dists.end(), greater<>());
+    // cout << dists[0] << endl;
+    // int maxLeng = 0;
+    // string resultString;
+    // for (auto w: result) {
+    //     if (w.length() > maxLeng) {
+    //         maxLeng = w.length();
+    //         resultString = w;
+    //     } else if (w.length() == maxLeng) {
+    //         resultString = w < resultString? w : resultString;
+    //     }
+    // }
+    // for (auto w: resultString) {
+    //     cout << w << ' ';
+    // }
 
     return 0;
 }
