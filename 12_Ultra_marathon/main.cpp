@@ -43,6 +43,16 @@ void printG2() {
     }
     ENDL;
 }
+void printVisited() {
+    LINE;
+    for (int i = 0; i < 27; i++) {
+        char c;
+        if (visited[i] == 1) c = 'T';
+        else c = 'F';
+        printf("'%c':%c, ", (char)(i+'a'), c);
+    }
+    ENDL;
+}
 bool cmp(const Edge &edge1, const Edge &edge2) {
     if (edge1.weight == edge2.weight) {
         return edge1.dest < edge2.dest; // alphabetic order
@@ -61,10 +71,14 @@ vector<int> dists;
 
 queue <int> que;
 
-// bool bfs(int index, int destIndex) {
-bool bfs(int index) {
-    bool visitedBfs[27] = {false, };
-//	cout << (char)(index + 'A');
+
+
+bool bfs(int index) { // input: destIndex
+    bool visitedBfs[27];
+    copy(visited, visited + 27, visitedBfs);
+
+    visitedBfs[0] = false; // 'a' is not visited
+
     visitedBfs[index] = true;
     que.push(index);
     int nowNum;
@@ -92,6 +106,7 @@ bool bfs(int index) {
 void dfs(int index) {
 //    cout << (char) (index + 'a') << ' ';
     visited[index] = true;
+//    printVisited();
     dq.push_back((char)(index + 'a'));
     cout << "^^" << graph[index].size() << endl;
 
@@ -101,29 +116,28 @@ void dfs(int index) {
 
     for (int i = 0; i < graph[index].size(); i++) {
         int destIndex = graph[index][i].dest;
-        printf("(%c - %c, %d)\n", (char) (index + 'a'), (char) destIndex + 'a', graph[index][i].weight);
+//        printf("(%c - %c, %d)\n", (char) (index + 'a'), (char) destIndex + 'a', graph[index][i].weight);
         if (destIndex == 0) {
             if (dist + graph[index][i].weight > maxDist) maxDist = dist + graph[index][i].weight;
 
             string outputString(dq.begin(), dq.end());
-            cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n";
-            cout << "completed!!: " << outputString << "\n";
+            cout << "completed!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!: " << outputString << "\n";
             result.push_back(outputString);
         }
         if (visited[destIndex] == false) {
             // erase edge
-            graphBfs[index].erase(graphBfs[index].begin() + i);
-            graphBfs[destIndex].erase(remove_if(graphBfs[destIndex].begin(), graphBfs[destIndex].end(), [&index](auto x) -> bool { return x.dest == index;
-             }), graphBfs[destIndex].end());
+//            graphBfs[index].erase(graphBfs[index].begin() + i);
+//            graphBfs[destIndex].erase(remove_if(graphBfs[destIndex].begin(), graphBfs[destIndex].end(), [&index](auto x) -> bool { return x.dest == index;
+//             }), graphBfs[destIndex].end());
 
             bool isConnected = bfs(destIndex);
             if (!isConnected) {
 //                return;
 //                continue;
 
-                //복구
-                graphBfs[index].push_back(Edge(destIndex, graph[index][i].weight));
-                graphBfs[destIndex].push_back(Edge(index, graph[index][i].weight));
+//                //복구
+//                graphBfs[index].push_back(Edge(destIndex, graph[index][i].weight));
+//                graphBfs[destIndex].push_back(Edge(index, graph[index][i].weight));
             }
             else {
 //                graphBfs[index].push_back(Edge(destIndex, graph[index][i].weight));
@@ -138,22 +152,26 @@ void dfs(int index) {
             restore = 0;
             dist -= graph[index][i].weight;
             printf("%c's dist restored: %d\n", (char)(index + 'a'), dist);
-            //복구
-            graphBfs[index].push_back(Edge(destIndex, graph[index][i].weight));
-            graphBfs[destIndex].push_back(Edge(index, graph[index][i].weight));
+//            //복구
+//            graphBfs[index].push_back(Edge(destIndex, graph[index][i].weight));
+//            graphBfs[destIndex].push_back(Edge(index, graph[index][i].weight));
 
         }
         if (i+1 == graph[index].size()) {// if couldn't find to go
             visited[index] = false;
             printf("%c's visited restored\n", (char)(index + 'a'));
 
+            if (index == 0) {
+                cout << '\n' << maxDist << '\n';
+                return;
+            }
+
 //            printf("before pop, back():: %c\n", dq.back());
-            dq.pop_back();
+            if (dq.size() != 0)
+                dq.pop_back();
 //            printf("after pop, back():: %c\n", dq.back());
 
             int beforeIndex = dq.back() - 'a';
-
-
 
             restore = 1;
         }

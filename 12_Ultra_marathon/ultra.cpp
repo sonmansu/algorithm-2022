@@ -1,13 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-stack<char> st;
 
 bool visited[27] = {false, };
-//int visited[27] = {0, };
 
 class Edge {
-public:
+  public:
     int dest;
     int weight;
 
@@ -16,6 +14,9 @@ public:
         weight = weight_;
     }
 };
+vector<vector<Edge>> graph(26);
+vector<vector<Edge>> graphBfs(26);
+
 bool cmp(const Edge &edge1, const Edge &edge2) {
     if (edge1.weight == edge2.weight) {
         return edge1.dest < edge2.dest; // alphabetic order
@@ -23,21 +24,56 @@ bool cmp(const Edge &edge1, const Edge &edge2) {
         return edge1.weight > edge2.weight; // weight big -> small
     }
 }
-
-vector<vector<Edge>> graph(26);
-
 int dist = 0;
+int maxDist = 0;
 int restore = 0;
 vector<int> dists;
+queue <int> que;
+
+
+
+bool bfs(int index) { // input: destIndex
+    bool visitedBfs[27];
+    copy(visited, visited + 27, visitedBfs);
+
+    visitedBfs[0] = false; // 'a' is not visited
+
+    visitedBfs[index] = true;
+    que.push(index);
+    int nowNum;
+    while(!que.empty()) {
+        nowNum = que.front();
+        que.pop();
+
+        for (int i = 0; i < graphBfs[nowNum].size(); i++) {
+            if (visitedBfs[graphBfs[nowNum][i].dest] == false) {
+                visitedBfs[graphBfs[nowNum][i].dest] = true;
+                que.push(graphBfs[nowNum][i].dest);
+            }
+        }
+    }
+    if (visitedBfs[0] == false) { // a is not connected
+        return false;
+    } else {
+        return true;
+    }
+}
+
 void dfs(int index) {
     visited[index] = true;
+
+
     for (int i = 0; i < graph[index].size(); i++) {
-        if (graph[index][i].dest == 0) {
-            dists.push_back(dist + graph[index][i].weight);
+        int destIndex = graph[index][i].dest;
+        if (destIndex == 0) {
+            if (dist + graph[index][i].weight > maxDist) maxDist = dist + graph[index][i].weight;
         }
-        if (visited[graph[index][i].dest] == false) {
-            dist += graph[index][i].weight;
-            dfs(graph[index][i].dest);
+        if (visited[destIndex] == false) {
+            bool isConnected = bfs(destIndex);
+            if (isConnected) {
+                dist += graph[index][i].weight;
+                dfs(destIndex);
+            } else {}
         }
         if (restore == 1) {
             restore = 0;
@@ -45,6 +81,11 @@ void dfs(int index) {
         }
         if (i+1 == graph[index].size()) {// if couldn't find to go
             visited[index] = false;
+
+            if (index == 0) {
+                return;
+            }
+
             restore = 1;
         }
 
@@ -70,11 +111,10 @@ int main() {
             sort(graph[i].begin(), graph[i].end(), cmp);
         }
     }
-
+    graphBfs = graph;
     dfs(0);
 
-    auto it = max_element(dists.begin(), dists.end());
-    cout << *it;
+    cout << maxDist << endl;
 
     return 0;
 }
