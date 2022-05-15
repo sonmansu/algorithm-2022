@@ -9,7 +9,7 @@ bool visited[27] = {false, };
 //int visited[27] = {0, };
 
 class Edge {
-public:
+  public:
     int dest;
     int weight;
 
@@ -32,7 +32,17 @@ void printG() {
     }
     ENDL;
 }
-
+void printG2() {
+    LINE;
+    for (int i = 0; i < graphBfs.size(); i++) {
+        cout << graphBfs[i].size() << endl;
+        for (Edge e: graphBfs[i]) {
+            cout << i << ", " << (char)(i + 'a');
+            printf("- %c, %d\n", (char)e.dest + 'a', e.weight);
+        }
+    }
+    ENDL;
+}
 bool cmp(const Edge &edge1, const Edge &edge2) {
     if (edge1.weight == edge2.weight) {
         return edge1.dest < edge2.dest; // alphabetic order
@@ -54,30 +64,27 @@ queue <int> que;
 // bool bfs(int index, int destIndex) {
 bool bfs(int index) {
     bool visitedBfs[27] = {false, };
+//	cout << (char)(index + 'A');
+    visitedBfs[index] = true;
+    que.push(index);
+    int nowNum;
+    while(!que.empty()) {
+        nowNum = que.front();
+        que.pop();
 
-	cout << (char)(index + 'A');
-	visited[index] = true;
-	que.push(index);
-	int nowNum;
-	while(!que.empty()){
-		nowNum = que.front();
-		que.pop();
-
-		for (int i = 0; i < graphBfs[nowNum].size(); i++) {
-			if (visited[graphBfs[nowNum][i].dest] == false) {
-                dist += graphBfs[index][i].weight;
-                cout << "dist updated: " << dist << endl;
-				cout << (char)(graphBfs[nowNum][i].dest + 'A');
-				visited[graphBfs[nowNum][i].dest] = true;
-				que.push(graphBfs[nowNum][i].dest);
-			}
-		}
-	}
+        for (int i = 0; i < graphBfs[nowNum].size(); i++) {
+            if (visitedBfs[graphBfs[nowNum][i].dest] == false) {
+//				cout << (char)(graphBfs[nowNum][i].dest + 'A');
+                visitedBfs[graphBfs[nowNum][i].dest] = true;
+                que.push(graphBfs[nowNum][i].dest);
+            }
+        }
+    }
     if (visitedBfs[0] == false) { // a is not connected
-        varout("연결돼있지 않음");
+        varout("Not connected!!");
         return false;
     } else {
-        varout("연결돼있음");
+        varout("Connected!!");
         return true;
     }
 }
@@ -88,13 +95,15 @@ void dfs(int index) {
     dq.push_back((char)(index + 'a'));
     cout << "^^" << graph[index].size() << endl;
 
+    string outputString(dq.begin(), dq.end());
+    cout << outputString << "\n";
+
 
     for (int i = 0; i < graph[index].size(); i++) {
         int destIndex = graph[index][i].dest;
         printf("(%c - %c, %d)\n", (char) (index + 'a'), (char) destIndex + 'a', graph[index][i].weight);
         if (destIndex == 0) {
-            dist = dist + graph[index][i].weight;
-            if (dist > maxDist) maxDist = dist;
+            if (dist + graph[index][i].weight > maxDist) maxDist = dist + graph[index][i].weight;
 
             string outputString(dq.begin(), dq.end());
             cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n";
@@ -102,33 +111,50 @@ void dfs(int index) {
             result.push_back(outputString);
         }
         if (visited[destIndex] == false) {
-            dist += graph[index][i].weight;
-            cout << "dist updated: " << dist << endl;
-
             // erase edge
             graphBfs[index].erase(graphBfs[index].begin() + i);
-            graphBfs[destIndex].erase(remove_if(graphBfs[destIndex].begin(), graphBfs[destIndex].end(), [&index](auto x) -> bool { return x.dest == index; }), graphBfs[destIndex].end());
+            graphBfs[destIndex].erase(remove_if(graphBfs[destIndex].begin(), graphBfs[destIndex].end(), [&index](auto x) -> bool { return x.dest == index;
+             }), graphBfs[destIndex].end());
 
             bool isConnected = bfs(destIndex);
-            if (!isConnected)
-                return;
-            else 
+            if (!isConnected) {
+//                return;
+//                continue;
+
+                //복구
                 graphBfs[index].push_back(Edge(destIndex, graph[index][i].weight));
                 graphBfs[destIndex].push_back(Edge(index, graph[index][i].weight));
-            
+            }
+            else {
+//                graphBfs[index].push_back(Edge(destIndex, graph[index][i].weight));
+//                graphBfs[destIndex].push_back(Edge(index, graph[index][i].weight));
 
-
-            dfs(destIndex);
+                dist += graph[index][i].weight;
+                cout << "dist updated: " << dist << endl;
+                dfs(destIndex);
+            }
         }
         if (restore == 1) {
             restore = 0;
             dist -= graph[index][i].weight;
             printf("%c's dist restored: %d\n", (char)(index + 'a'), dist);
+            //복구
+            graphBfs[index].push_back(Edge(destIndex, graph[index][i].weight));
+            graphBfs[destIndex].push_back(Edge(index, graph[index][i].weight));
+
         }
         if (i+1 == graph[index].size()) {// if couldn't find to go
             visited[index] = false;
-            dq.pop_back();
             printf("%c's visited restored\n", (char)(index + 'a'));
+
+//            printf("before pop, back():: %c\n", dq.back());
+            dq.pop_back();
+//            printf("after pop, back():: %c\n", dq.back());
+
+            int beforeIndex = dq.back() - 'a';
+
+
+
             restore = 1;
         }
 
@@ -157,10 +183,11 @@ int main() {
     graphBfs = graph;
 
     printG();
+//    printG2(); 동일결과
 
     dfs(0);
 
     cout << maxDist << endl;
-   
+
     return 0;
 }
