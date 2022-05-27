@@ -1,0 +1,7 @@
+
+int main() {
+    //    string str1 = "520";
+//    string str2 = "520003";
+//    string ans = str1 > str2? "520더큼" : "120003 더큼";
+//    cout << ans;
+}
