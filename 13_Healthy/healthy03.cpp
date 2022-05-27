@@ -6,43 +6,58 @@ class Node {
     vector<int> puts, nutSum;
     int cost; 
     Node(vector<int> puts, vector<int> nutSum, int cost) {
-        this->puts = puts; this->nutSum = nutSum; this->cost = cost;
+        this->puts = puts;
+        this->nutSum = nutSum;
+        this->cost = cost;
     }
     bool operator<(const Node node) const {
         return (this->cost > node.cost);
     }
 };
 
-vector<int> criteria(4);vector<vector<int>> diets; 
-priority_queue<Node> pq;vector<Node> solNodes;
+vector<int> criteria(4);
+vector<vector<int>> diets; 
+priority_queue<Node> pq;
+vector<Node> solNodes;
 set<vector<int>> mySet;
 
 bool cmp(const vector<int> &v1, const vector<int> &v2) {
-    if (v1[7] == v2[7]) return v1[5] < v2[5]; 
-    else return v1[7] > v2[7]; 
+    if (v1[7] == v2[7]) {
+        return v1[5] < v2[5]; 
+    } else
+        return v1[7] > v2[7]; 
 }
 int main() {
     int k;
     cin >> k;
     int minCost = 500 * k; 
-    for (int i = 0; i < 4; i++)  cin >> criteria[i];
+    for (int i = 0; i < 4; i++) {
+        cin >> criteria[i];
+    }
     for (int i = 0; i < k; i++) {
         vector<int> row(8); 
         row[0] = i+1; 
-        for (int j = 1; j < 6; j++) cin >> row[j];
+        for (int j = 1; j < 6; j++) {
+            cin >> row[j];
+        }
         diets.push_back(row);
     }
     for (int i = 0; i < k; i++) {
         int sum = 0;
-        for (int j = 1; j < 5; j++)  sum += diets[i][j];
+        for (int j = 1; j < 5; j++) {
+            sum += diets[i][j];
+        }
         diets[i][6] = sum; 
         diets[i][7] = diets[i][5] != 0 ? sum / diets[i][5] : 100000;
     }
     sort(diets.begin(), diets.end(), cmp);
     for (auto d: diets) { 
-        vector<int> puts(k + 1), nutSum(4); 
+        vector<int> puts(k + 1); 
         puts[d[0]] = 1; 
-        for (int i = 1; i < 5; i++) nutSum[i-1] = d[i];
+        vector<int> nutSum(4);
+        for (int i = 1; i < 5; i++) {
+            nutSum[i-1] = d[i];
+        }
         Node node(puts, nutSum, d[5]);
         pq.push(node);
     }
@@ -95,7 +110,9 @@ int main() {
         for (int i = 0; i < solCnt; i++) {
             auto node = solNodes[i];
             int allNutSum = 0;
-            for (auto sum: node.nutSum) allNutSum += sum;
+            for (auto sum: node.nutSum) {
+                allNutSum += sum;
+            }
             if (allNutSum > maxAllNutSum) {
                 strPuts.clear();
                 maxAllNutSum = allNutSum;
@@ -110,11 +127,13 @@ int main() {
         }
         if (strPuts.size() > 0) { 
             auto it = min_element(strPuts.begin(), strPuts.end());
-            for (int i = 1; i < k+1; i++)
+            for (int i = 1; i < k+1; i++) {
                 if ((*it)[i] == '1') cout << i << ' ';
+            }
         } else { 
-            for (int i = 1; i < k+1; i++)
+            for (int i = 1; i < k+1; i++) {
                 if (solNodes[idx].puts[i] == 1) cout << i << ' ';
+            }
         }
     }
     return 0;
