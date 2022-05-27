@@ -87,7 +87,6 @@ int main() {
         row[0] = i+1; // 순번
         for (int j = 1; j < 6; j++) {
             cin >> row[j];
-            cout << row[j] << ' ';
         }
         cout << endl;
         diets.push_back(row);
@@ -163,12 +162,12 @@ int main() {
                     prom.puts[ingNum] = 0; //복구
                     continue;
                 }
-
-                cout << "finishedSet 출력 ==\n";
-                for (auto v: finishedSet) {
-                    cout << "|| ";
-                    contout(v);
-                }
+//
+//                cout << "finishedSet 출력 ==\n";
+//                for (auto v: finishedSet) {
+//                    cout << "|| ";
+//                    contout(v);
+//                }
 
 
 
@@ -191,10 +190,12 @@ int main() {
                     } else if (prom.cost == minCost) {
                         solNodes.push_back(prom);
                     }
-                } else {
-                    pq.push(prom);
+                    // 해를 만족시킨 지금 노드를 .. 다시뻄. finishedSet엔 고대로 들어가있으니까 체크 안하지 않나?
+                    prom.puts[ingNum] = 0; // 다시뺴고 push..
+
                 }
 
+                pq.push(prom);
                 break;
             }
         }

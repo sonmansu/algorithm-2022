@@ -78,7 +78,7 @@ int main() {
                 } else {
                     pq.push(prom);
                 }
-                break;
+                // break;
             }
         }
     }
